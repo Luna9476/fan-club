@@ -1,15 +1,18 @@
-# Basic Sample Hardhat Project
+# Fans Club
+Fans club is a platform where fans can vote for their favorite stars with gifts exchanged by ethereum.
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+## Team Members
+Linger Shen
 
-Try running some of the following tasks:
+Lei Lu
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+Qianhui Jiang
+
+Zhuomin Hao
+
+## Brief Introduction
+
+ 
+
+## How to Run 
+
