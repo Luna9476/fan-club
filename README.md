@@ -22,5 +22,7 @@ Fans club is a platform where fans can vote for their favorite stars with gifts 
  
 
 ## How to Run 
-
+```shell
+npm install
 npm start
+```
