@@ -15,6 +15,7 @@ contract Club{
     }
 
     struct Star {
+        uint id;
         string name;
         string introduction;
         string avatarURL;
@@ -29,7 +30,7 @@ contract Club{
 
     event buySuccess(address addr, uint num);
     event refundSuccess(address addr, uint num);
-    event publishSuccess(string name, string introduction, string avatarURL, uint votes);
+    event publishSuccess(uint starId, string name, string introduction, string avatarURL, uint votes);
     event voteSuccess();
     event TransactionRecords(TransactionInfo[] records, string eventMsg, bool success);
 
@@ -49,9 +50,10 @@ contract Club{
 
     // Publish star, only admin permission can operate
     function publish(string memory name, string memory introduction, string memory avatarURL, uint votes) public checkAdministrator(){
-        Star memory starToBePublished=Star(name,introduction,avatarURL,votes);
+        uint starId=stars.length-1;
+        Star memory starToBePublished=Star(starId, name,introduction,avatarURL,votes);
         stars.push(starToBePublished);
-        emit publishSuccess(name,introduction,avatarURL,votes);
+        emit publishSuccess(starId, name,introduction,avatarURL,votes);
     } 
 
     // vote for star
