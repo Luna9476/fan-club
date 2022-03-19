@@ -1,34 +1,17 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-// token for gift in our system
-contract GiftToken{
-
+contract Club{
     uint tokenTotal;    
     uint tokenPrice;    
     uint balanceTokens; // contract remaining token
+    address public admin;
 
-    // user balance record
-    mapping(address=>uint) balances;
-
-    event buySuccess(address addr, uint num);
-    event refundSuccess(address addr, uint num);
-
-    //  [tokenTotal, tokenPrice, balance, contract ether, user's token,  user ether]
-    function getBalanceInfo() public view returns (
-        uint, uint, uint, uint, uint, uint) {
-        return (tokenTotal, tokenPrice,
-        balanceTokens, address(this).balance,
-        balances[msg.sender], msg.sender.balance);
-    }
-}
-
-contract Club is GiftToken {
-
-    constructor (uint _tokens, uint _tokenPrice) {
-        tokenTotal = _tokens;       // 100000
+    constructor (uint _tokens, uint _tokenPrice, address adminad) {
+        tokenTotal = _tokens;       // 10^5
         tokenPrice = _tokenPrice;   // 10^17
-        balanceTokens = tokenTotal; // 100000
+        balanceTokens = tokenTotal; // 10^5
+        admin = adminad;
     }
 
     struct Star {
@@ -44,6 +27,8 @@ contract Club is GiftToken {
         uint transAmount;
     }
 
+    event buySuccess(address addr, uint num);
+    event refundSuccess(address addr, uint num);
     event publishSuccess(string name, string introduction, string avatarURL, uint votes);
     event voteSuccess();
     event TransactionRecords(TransactionInfo[] records, string eventMsg, bool success);
@@ -51,11 +36,10 @@ contract Club is GiftToken {
     // All published stars
     Star[] stars;
 
-    // Administrator address
-    address public admin;
-
     // User address to user related transaction information
     mapping (address => TransactionInfo[]) transRecords;
+    // user balance record
+    mapping(address=>uint) balances;
 
     // Check admin permission
     modifier checkAdministrator() {
@@ -91,8 +75,17 @@ contract Club is GiftToken {
         return (stars,"Get all published stars!",true, stars.length);
     }
 
+    //  [tokenTotal, tokenPrice, balance, contract ether], [user's token,  user ether]
+    function getBalanceInfo() public view returns (
+        uint, uint, uint, uint) {
+        if(msg.sender==admin)
+            return (tokenTotal, tokenPrice, balanceTokens, address(this).balance);
+        return (balances[msg.sender], msg.sender.balance,0,0);
+    }
+
     // Buy gift tokens
     function buy() public payable {
+        require(msg.value>=tokenPrice);
         uint tokensToBuy = msg.value / tokenPrice;
         require(tokensToBuy <= balanceTokens); // remaing token is sufficient
         // update balance
