@@ -26,3 +26,7 @@ Fans club is a platform where fans can vote for their favorite stars with gifts 
 npm install
 npm start
 ```
+Especially for hardhat smart contract test:
+```shell
+npx hardhat test
+```
