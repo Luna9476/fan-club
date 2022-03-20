@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
-import "./console.sol";
+
 contract Club{
     uint tokenTotal;    
     uint tokenPrice;    
@@ -89,7 +89,7 @@ contract Club{
 
     // Buy gift tokens
     function buy(string memory _time) public payable {
-        require(msg.value>=tokenPrice);
+        require(msg.value>=tokenPrice,"Not enough payment!");
         require(msg.value<=msg.sender.balance);
         uint tokensToBuy = msg.value / tokenPrice;
         require(tokensToBuy <= balanceTokens); // remaing token is sufficient
@@ -109,15 +109,13 @@ contract Club{
     }
 
     // Refund gift tokens
-    function refund(uint tokenRefund, string memory _time) public returns(bool success){
-        require(tokenRefund > 0,"here");
+    function refund(uint ethRefund, string memory _time) public returns(bool success){
+        uint tokenRefund=ethRefund/tokenPrice;
+        require(tokenRefund > 0);
         require(tokenRefund <= balances[msg.sender]); // User should have sufficient token to sell
-        uint total = tokenRefund * tokenPrice;
         balances[msg.sender] -= tokenRefund;
         balanceTokens += tokenRefund;
-        //console.log(msg.sender.balance);
-        payable(msg.sender).transfer(total);
-        //console.log(msg.sender.balance);
+        payable(msg.sender).transfer(ethRefund);
         emit refundSuccess(msg.sender, tokenRefund);
 
         TransactionInfo memory trans;
@@ -134,9 +132,5 @@ contract Club{
     // Get user transaction records
     function getTransRecords() public view returns(TransactionInfo[] memory, string memory, bool, uint256) {
         return (transRecords[msg.sender], "Get transactions!", true, transRecords[msg.sender].length);
-    }
-
-    function testTransfer(uint pp) public {
-        payable(msg.sender).transfer(pp);
     }
 }
