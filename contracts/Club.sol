@@ -40,11 +40,11 @@ contract Club{
     // User address to user related transaction information
     mapping (address => TransactionInfo[]) transRecords;
     // User balance record
-    mapping(address=>uint) balances;
+    mapping(address => uint) balances;
 
     // Check admin permission
     modifier checkAdministrator() {
-        require(msg.sender==admin,"You are not admin!");
+        require(msg.sender == admin,"You are not admin!");
         _;
     }
 
@@ -56,8 +56,8 @@ contract Club{
 
     // Publish star, only admin permission can operate
     function publish(string memory name, string memory introduction, string memory avatarURL, uint votes) public checkAdministrator(){
-        uint starId=stars.length;
-        Star memory starToBePublished=Star(starId, name,introduction,avatarURL,votes);
+        uint starId = stars.length;
+        Star memory starToBePublished = Star(starId, name,introduction,avatarURL,votes);
         stars.push(starToBePublished);
         emit publishSuccess(starId, name,introduction,avatarURL,votes);
     } 
@@ -65,7 +65,7 @@ contract Club{
     // Vote for star
     function vote(uint starId, uint giftAmount, string memory _time) public {
         require(starId < stars.length);
-        require(giftAmount<= balances[msg.sender]);
+        require(giftAmount <= balances[msg.sender]);
         Star storage star = stars[starId];
         star.votes += giftAmount;
         balances[msg.sender] -= giftAmount;
@@ -88,17 +88,19 @@ contract Club{
     // For fans: retrn [user's token,  user ether, 0, 0]
     function getBalanceInfo() public view returns (
         uint, uint, uint, uint) {
-        if(msg.sender==admin)
+        if(msg.sender == admin)
             return (tokenTotal, tokenPrice, balanceTokens, address(this).balance);
+        console.log(msg.sender.balance);
+        
         return (balances[msg.sender], msg.sender.balance,0,0);
     }
 
     // Buy gift tokens
     function buy(string memory _time) public payable {
-        require(msg.value>=tokenPrice,"Not enough payment!");
-        require(msg.value<=msg.sender.balance);
+        require(msg.value >= tokenPrice, "Not enough payment!");
+        require(msg.value <= msg.sender.balance);
         uint tokensToBuy = msg.value / tokenPrice;
-        require(tokensToBuy <= balanceTokens); // remaing token is sufficient
+        require(tokensToBuy <= balanceTokens, "Not enough tokens"); // remaing token is sufficient
         // update balance
         balances[msg.sender] += tokensToBuy;
         balanceTokens -= tokensToBuy;
@@ -116,7 +118,7 @@ contract Club{
 
     // Refund gift tokens
     function refund(uint ethRefund, string memory _time) public returns(bool success){
-        uint tokenRefund=ethRefund/tokenPrice;
+        uint tokenRefund = ethRefund / tokenPrice;
         require(tokenRefund > 0);
         require(tokenRefund <= balances[msg.sender]); // User should have sufficient token to sell
         balances[msg.sender] -= tokenRefund;
