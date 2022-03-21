@@ -1,55 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Navbar, Container, Nav, Button, Form } from 'react-bootstrap';
-import { BsFillHeartFill, BsPersonCircle } from "react-icons/bs";
 import { FcLike } from "react-icons/fc";
 import MetaMaskAuth from './MetaMaskAuth';
 import { ethers } from 'ethers';
 
 
 
-
-function PageNavbar({ onAddressChanged }) {
+function PageNavbar() {
 	const [errorMessage, setErrorMessage] = useState(null);
-	const [defaultAccount, setDefaultAccount] = useState(null);
 	const [userBalance, setUserBalance] = useState(null);
-	const [connButtonText, setConnButtonText] = useState('Connect Wallet');
-	async function requestAccount() {
-		await window.ethereum.request({ method: 'eth_requestAccounts' })
-	}
-
-	async function connect() {
-		if (typeof window.ethereum !== 'undefined') {
-			await requestAccount()
-		}
-	}
-
-	const connectWalletHandler = () => {
-		if (window.ethereum && window.ethereum.isMetaMask) {
-			console.log('MetaMask Here!');
-
-			window.ethereum.request({ method: 'eth_requestAccounts' })
-				.then(result => {
-					accountChangedHandler(result[0]);
-					setConnButtonText('Wallet Connected');
-					getAccountBalance(result[0]);
-					console.log("connect")
-				})
-				.catch(error => {
-					setErrorMessage(error.message);
-
-				});
-
-		} else {
-			console.log('Need to install MetaMask');
-			setErrorMessage('Please install MetaMask browser extension to interact');
-		}
-	}
-
-	// update account, will cause component re-render
-	const accountChangedHandler = (newAccount) => {
-		setDefaultAccount(newAccount);
-		getAccountBalance(newAccount.toString());
-	}
+    const [admin, setAdmin] = useState(false)
 
 	const getAccountBalance = (account) => {
 		window.ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] })
@@ -66,11 +26,12 @@ function PageNavbar({ onAddressChanged }) {
 		window.location.reload();
 	}
 
-
-	// listen for account changes
-	window.ethereum.on('accountsChanged', accountChangedHandler);
-
 	window.ethereum.on('chainChanged', chainChangedHandler);
+
+    async function isAdmin() {
+  
+    }
+
 
 	return (
 		<div>
@@ -83,9 +44,10 @@ function PageNavbar({ onAddressChanged }) {
 							<Nav.Link href="#chartdiv">Vote</Nav.Link>
 							<Nav.Link href="#shop">Fan Shop</Nav.Link>
 							<Nav.Link href="#manage">Manage Idols</Nav.Link>
+                            {admin?<Nav.Link href="publish">Publish</Nav.Link> : ""} 
 						</Nav>
 					
-					<MetaMaskAuth />
+					<MetaMaskAuth setAdmin={setAdmin}/>
 
 				</Container>
 			</Navbar>

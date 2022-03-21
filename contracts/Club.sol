@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
-
+import "hardhat/console.sol";
 contract Club{
     uint tokenTotal;    
     uint tokenPrice;    
@@ -46,6 +46,12 @@ contract Club{
     modifier checkAdministrator() {
         require(msg.sender==admin);
         _;
+    }
+
+    function isAdmin() public view returns (bool){
+        console.log(msg.sender);
+        console.log(admin);
+        return msg.sender == admin;
     }
 
     // Publish star, only admin permission can operate

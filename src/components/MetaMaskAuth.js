@@ -2,22 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Navbar, Container, Nav, Button, Form, Modal, Row, Col } from 'react-bootstrap';
 import { BsFillHeartFill, BsPersonCircle } from "react-icons/bs";
 import { BiLinkExternal } from "react-icons/bi"
+import { ethers } from 'ethers';
 
-async function connect(onConnected) {
-    if (!window.ethereum) {
-        alert("Get MetaMask!");
-        return;
-    }
-
-    const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-    });
-
-    onConnected(accounts[0]);
-}
+import Club from '../artifacts/contracts/Club.sol/Club.json'
 
 
-export default function MetaMaskAuth() {
+
+
+export default function MetaMaskAuth({setAdmin}) {
     const [userAddress, setUserAddress] = useState("");
     const [showModal, setShowModal] = useState(false)
 
@@ -34,6 +26,24 @@ export default function MetaMaskAuth() {
         setUserAddress(accounts[0])
     });
 
+    const connect = async (onConnected) => {
+        if (!window.ethereum) {
+            alert("Get MetaMask!");
+            return;
+        }
+    
+        const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+        });
+        onConnected(accounts[0]);
+        console.log(userAddress)
+
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", Club.abi, provider)
+        const isAdmin = await contract.isAdmin()
+        setAdmin(isAdmin)
+        
+    }
 
     return (
         userAddress ? (
