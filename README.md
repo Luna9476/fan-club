@@ -19,10 +19,16 @@ Fans club is a platform where fans can vote for their favorite stars with gifts 
 
 - Only the admin can publish stars.
 
+- Fans can get their transaction history including vote/buy/refund.
+
  
 
 ## How to Run 
 ```shell
 npm install
 npm start
+```
+Especially for hardhat smart contract test:
+```shell
+npx hardhat test
 ```
