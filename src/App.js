@@ -1,17 +1,26 @@
 import './App.css';
+import { BrowserRouter, Redirect, Routes,Route, Switch, Link } from 'react-router-dom'
+import Home from './components/Home'
 import PageNavbar from './components/PageNavbar';
-import Pool from './components/Pool';
-import StarCarousel from './components/StarCarousel';
+import Manage from './components/Manage';
+import React, { Component } from 'react'
 
-function App() {
-  return (
-    <div>
-      <PageNavbar />
-      <StarCarousel />
-      <Pool />
-      <div></div>
-    </div>
-  );
+
+export default class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <PageNavbar></PageNavbar> 
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="/manage" element={<Manage />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </div>
+    )
+  }
 }
 
-export default App;
+

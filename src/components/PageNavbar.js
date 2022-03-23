@@ -8,6 +8,8 @@ import { ethers } from 'ethers';
 
 
 
+
+
 function PageNavbar({ onAddressChanged }) {
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
@@ -76,13 +78,13 @@ function PageNavbar({ onAddressChanged }) {
 		<div>
 			<Navbar>
 				<Container>
-					<Navbar.Brand href="#home"><FcLike size={20} /> Fans Club</Navbar.Brand>
+					<Navbar.Brand href="/home"><FcLike size={20} /> Fans Club</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					
 						<Nav className="justify-content-center">
-							<Nav.Link href="#chartdiv">Vote</Nav.Link>
+							<Nav.Link href="/#chartdiv">Vote</Nav.Link>
 							<Nav.Link href="#shop">Fan Shop</Nav.Link>
-							<Nav.Link href="#manage">Manage Idols</Nav.Link>
+							<Nav.Link href="/manage">Manage Idols</Nav.Link>
 						</Nav>
 					
 					<MetaMaskAuth />
@@ -90,6 +92,7 @@ function PageNavbar({ onAddressChanged }) {
 				</Container>
 			</Navbar>
 		</div>
+		
 
 	);
 }
