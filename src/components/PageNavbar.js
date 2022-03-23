@@ -37,13 +37,13 @@ function PageNavbar() {
 		<div>
 			<Navbar>
 				<Container>
-					<Navbar.Brand href="#home"><FcLike size={20} /> Fans Club</Navbar.Brand>
+					<Navbar.Brand href="/home"><FcLike size={20} /> Fans Club</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					
 						<Nav className="justify-content-center">
-							<Nav.Link href="#chartdiv">Vote</Nav.Link>
+							<Nav.Link href="/#chartdiv">Vote</Nav.Link>
 							<Nav.Link href="#shop">Fan Shop</Nav.Link>
-							<Nav.Link href="#manage">Manage Idols</Nav.Link>
+							<Nav.Link href="/manage">Manage Idols</Nav.Link>
                             {admin?<Nav.Link href="publish">Publish</Nav.Link> : ""} 
 						</Nav>
 					
