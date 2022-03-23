@@ -37,3 +37,21 @@
   }
 }
 
+.form-border {
+  border: 2px solid #f5f7ff !important;
+  margin-top: 30px;
+  padding: 40px;
+  display: inline-block;
+  width: 100%;
+  min-width: 540px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-align: left;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.form-border h3 {
+  text-align: left;
+}
