@@ -9,7 +9,7 @@ import { ethers } from 'ethers';
 function PageNavbar() {
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [userBalance, setUserBalance] = useState(null);
-    const [admin, setAdmin] = useState(false)
+	const [admin, setAdmin] = useState(false)
 
 	const getAccountBalance = (account) => {
 		window.ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] })
@@ -28,9 +28,9 @@ function PageNavbar() {
 
 	window.ethereum.on('chainChanged', chainChangedHandler);
 
-    async function isAdmin() {
-  
-    }
+	async function isAdmin() {
+
+	}
 
 
 	return (
@@ -39,15 +39,15 @@ function PageNavbar() {
 				<Container>
 					<Navbar.Brand href="/home"><FcLike size={20} /> Fans Club</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-					
-						<Nav className="justify-content-center">
-							<Nav.Link href="/#chartdiv">Vote</Nav.Link>
-							<Nav.Link href="/shop">Fan Shop</Nav.Link>
-							<Nav.Link href="/manage">Manage Idols</Nav.Link>
-                            {admin?<Nav.Link href="publish">Publish</Nav.Link> : ""} 
-						</Nav>
-					
-					<MetaMaskAuth setAdmin={setAdmin}/>
+
+					<Nav className="justify-content-center">
+						<Nav.Link href="/#chartdiv">Vote</Nav.Link>
+						<Nav.Link href="/shop">Fan Shop</Nav.Link>
+						<Nav.Link href="/manage">Manage Idols</Nav.Link>
+						{admin ? <Nav.Link href="publish">Publish</Nav.Link> : ""}
+					</Nav>
+
+					<MetaMaskAuth setAdmin={setAdmin} />
 
 				</Container>
 			</Navbar>
