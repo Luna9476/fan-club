@@ -1,60 +1,30 @@
 import React, { Component } from 'react'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Form from 'react-bootstrap/Form'
-import 'bootstrap/dist/css/bootstrap.css';
-import {Button, FormControl } from "react-bootstrap";
+import { Button, Container} from "react-bootstrap";
 
 
-export default class Manage extends Component {
-    render() {
-        return (
-            <div style={{
-                backgroundColor: "#ffde00",
-                display: 'block',
-                width: 700,
-                // color: #00F,
-                padding: 30
-            }}>
-                <h4>Post Your Idol's Information</h4>
-                <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="basic-addon1">Id</InputGroup.Text>
-                    <FormControl
-                        placeholder="Idol's Id"
-                        aria-label="Idol's Id"
-                        aria-describedby="Idol's Id"
-                    />
-                    
-                </InputGroup>
+export default function Manage() {
+    return (
+        <Container className='form-border'>  
+            <h3>Post Idols</h3>
+            <Form >
+                <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
+                    <Form.Control type="text" placeholder="Idol's Name" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                </Form.Group>
 
-                <InputGroup size="sm" className="mb-3">
-                    <InputGroup.Text id="basic-addon2">Name</InputGroup.Text>
-                    <FormControl
-                        placeholder="Idol's Name"
-                        aria-label="Idol's Name"
-                        aria-describedby="Idol's Name"
-                    />
-                </InputGroup>
+                <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicAvatar">
+                    <Form.Control type="url" placeholder="Avatar URL" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                </Form.Group>
 
-                <InputGroup className="mb-3">
-                    <InputGroup.Text id="basic-addon3">
-                        Avatar URL
-                    </InputGroup.Text>
-                    <FormControl id="basic-url" aria-describedby="basic-addon3" />
-                </InputGroup>
+                <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicAvatar">
+                    <Form.Control as="textarea" placeholder="Introduction" aria-label="With textarea" aria-describedby="basic-addon2"/>
+                </Form.Group>
 
-
-                <InputGroup>
-                    <InputGroup.Text>Introdution</InputGroup.Text>
-                    <FormControl as="textarea" aria-label="With textarea" />
-                </InputGroup>
-                <br />
-
-                <Button variant="primary" type="submit">
-                    Click here to submit form
+                <Button variant="primary" type="submit" onClick={() => {}}>
+                    Submit
                 </Button>
-
-
-            </div>
-        )
-    }
+            </Form>
+        </Container>
+    )
 }
