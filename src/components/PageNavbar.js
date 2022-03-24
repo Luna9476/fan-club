@@ -42,7 +42,7 @@ function PageNavbar() {
 					
 						<Nav className="justify-content-center">
 							<Nav.Link href="/#chartdiv">Vote</Nav.Link>
-							<Nav.Link href="#shop">Fan Shop</Nav.Link>
+							<Nav.Link href="/shop">Fan Shop</Nav.Link>
 							<Nav.Link href="/manage">Manage Idols</Nav.Link>
                             {admin?<Nav.Link href="publish">Publish</Nav.Link> : ""} 
 						</Nav>

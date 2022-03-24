@@ -31,7 +31,7 @@
 //             alert("Get MetaMask!");
 //             return;
 //         }
-    
+
 //         const accounts = await window.ethereum.request({
 //             method: "eth_requestAccounts",
 //         });
@@ -42,7 +42,7 @@
 //         const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", Club.abi, provider)
 //         const isAdmin = await contract.isAdmin()
 //         setAdmin(isAdmin)
-        
+
 //     }
 
 //     return (
@@ -152,7 +152,7 @@ export default function MetaMaskAuth() {
                     <Button onClick={() => setShowModal(true)}>
                         Connected with <Address userAddress={userAddress} />
                     </Button>
-                    <Nav.Link><BsPersonCircle className='fa-2x  primary' />My Account</Nav.Link>
+                    <Nav.Link href="/myaccount"><BsPersonCircle className='fa-2x  primary' />My Account</Nav.Link>
                 </Form>
 
 
