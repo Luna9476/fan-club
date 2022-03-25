@@ -39,15 +39,15 @@ function PageNavbar() {
 				<Container>
 					<Navbar.Brand href="/home"><FcLike size={20} /> Fans Club</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-
-					<Nav className="justify-content-center">
-						<Nav.Link href="/#chartdiv">Vote</Nav.Link>
-						<Nav.Link href="/shop">Fan Shop</Nav.Link>
-						<Nav.Link href="/manage">Manage Idols</Nav.Link>
-						{admin ? <Nav.Link href="publish">Publish</Nav.Link> : ""}
-					</Nav>
-
-					<MetaMaskAuth setAdmin={setAdmin} />
+					
+						<Nav className="justify-content-center">
+							<Nav.Link href="/#chartdiv">Vote</Nav.Link>
+							<Nav.Link href="/shop">Fan Shop</Nav.Link>
+							<Nav.Link href="/manage">Manage Idols</Nav.Link>
+                            {admin?<Nav.Link href="publish">Publish</Nav.Link> : ""} 
+						</Nav>
+					
+					<MetaMaskAuth setAdmin={setAdmin}/>
 
 				</Container>
 			</Navbar>

@@ -4,7 +4,7 @@ import { BsFillHeartFill, BsPersonCircle } from "react-icons/bs";
 import { BiLinkExternal } from "react-icons/bi"
 import { ethers } from 'ethers';
 
-import Club from '../artifacts/contracts/Club.sol/Club.json'
+import Club from '../../artifacts/contracts/Club.sol/Club.json'
 
 
 
