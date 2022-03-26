@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Form, Col, Row, Button} from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 const shopStyle = {
     display: 'flex',
@@ -51,7 +52,9 @@ export default class Manage extends Component {
                         <div style = {checkOutElementStyle}>
                             <Card.Text className = "pt-3" ><h5 style = {{marginBottom: "0rem"}}>Total Price: 3 ETH</h5></Card.Text>
                             <Card.Text>(Available Balance: 2 ETH)</Card.Text>
-                            <Button variant="primary"> Checkout </Button>
+                            <Button variant="primary"> 
+                                <Link to="/shopfeedback">Checkout</Link> 
+                            </Button>
                         </div>
                     </div>
                 </Card>
