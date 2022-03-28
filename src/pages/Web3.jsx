@@ -30,9 +30,6 @@ class Web3ABI extends React.Component {
         transRecord: []
     }
 
-    
-
-
     //check metemaske
     async checkMetamask() {
         const { ethereum } = window;
@@ -63,7 +60,6 @@ class Web3ABI extends React.Component {
     IsAAdmin() {
         const Contract = this.Contract();
         console.log(Contract.isAdmin())
-
     }
 
 
@@ -78,9 +74,11 @@ class Web3ABI extends React.Component {
     }
 
     //publish stars name, introduction, avatarURL, votes"serendipity02","serendipity02","serendipity01",55"name", "introduction", "avatarURL", 55
+    //"白敬亭","http://233","怀柔王子",55
     PublishStar(name, introduction, avatarURL, votes){
         const Contract = this.Contract();    
-        Contract.publish(this.name, this.introduction, this.avatarURL,55);      
+        console.log(name);
+        Contract.publish(name, introduction, avatarURL, votes);      
     }
  
     //vote(uint starId, uint giftAmount, string memory _time)

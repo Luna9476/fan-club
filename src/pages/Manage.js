@@ -35,7 +35,7 @@ export default class Manage extends Component {
     handleSubmit(event) {
         console.log(this.state)
         event.preventDefault();
-        w3.PublishStar(this.state)             
+        w3.PublishStar(this.state.name, this.state.introduction, this.state.avatarURL, this.state.votes)             
     }
 
     render() {

@@ -396,7 +396,7 @@ const contractABI = [
 
 
 //contract address
-const contractAddress = "0x13622fe80a02F3dDcef31BCBe1295f46cF3f6259";
+const contractAddress = "0xC6fBF9eF98D678539e4C32e4EB33bC9a60a7D83D";
 
 export {
 	contractAddress, contractABI
