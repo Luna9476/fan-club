@@ -45,21 +45,21 @@ The core functionalities include:
 
 - The administrator can upload a new idol information.
 
-  ![4-1](wireframe/4-1.jpg)
+  ![4-1](wireframe/4-1.png)
 
 #### My Account
 
 - My account page shows the transactions and the account balance.
 
-  ![5-1](wireframe/5-1.jpg)
+  ![5-1](wireframe/5-1.png)
 
-- Modal shows the refund quantity.
+- User could refund the vote tokens.
 
-  ![5-2](wireframe/5-2.jpg)
+  ![5-2](wireframe/5-2.png)
 
-- Refundconfirm page shows the result of refund.
+- Refund confirm page shows the result of refund.
 
-  ![5-3](wireframe/5-3.jpg)
+  ![5-3](wireframe/5-3.png)
 
 ## How to Run 
 
