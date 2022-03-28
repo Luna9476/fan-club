@@ -43,7 +43,7 @@ function PageNavbar() {
 						<Nav className="justify-content-center">
 							<Nav.Link href="/#chartdiv">Vote</Nav.Link>
 							<Nav.Link href="/shop">Fan Shop</Nav.Link>
-							<Nav.Link href="/myaccount">My Account</Nav.Link>
+							{/* <Nav.Link href="/myaccount">My Account</Nav.Link> */}
 							<Nav.Link href="/manage">Manage Idols</Nav.Link>
 							{/* manage page should be replaced by publish page*/}
                             {admin?<Nav.Link href="publish">Publish</Nav.Link> : ""} 

@@ -3,11 +3,17 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import Form from 'react-bootstrap/Form'
 import { Button, Container } from "react-bootstrap";
 
+//add web3ABI
+import Web3ABI from './Web3';
 
 export default function Manage() {
+
     return (
+
         <Container className='form-border'>
             <h3>Post Idols</h3>
+            <Web3ABI />
+            <h3>Post Idols000000000</h3>
             <Form >
                 <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
                     <Form.Control type="text" placeholder="Idol's Name" aria-label="Recipient's username" aria-describedby="basic-addon2" />
