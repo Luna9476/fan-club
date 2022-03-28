@@ -41,6 +41,26 @@ The core functionalities include:
 - Only the admin can publish stars.
 - Fans can get their transaction history including vote/buy/refund.
 
+#### Manage Idols
+
+- The administrator can upload a new idol information.
+
+  ![4-1](wireframe/4-1.jpg)
+
+#### My Account
+
+- My account page shows the transactions and the account balance.
+
+  ![5-1](wireframe/5-1.jpg)
+
+- Modal shows the refund quantity.
+
+  ![5-2](wireframe/5-2.jpg)
+
+- Refundconfirm page shows the result of refund.
+
+  ![5-3](wireframe/5-3.jpg)
+
 ## How to Run 
 
 Run React frontend
