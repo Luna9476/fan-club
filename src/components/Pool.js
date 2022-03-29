@@ -271,7 +271,7 @@ export default class Pool extends Component {
         return (
             <Container style={{margin: "30px"}}>
                 <Card>
-                    <Card.Title className="text-center"><h2>Hall of Fame</h2></Card.Title>
+                    <Card.Title className="text-center"><h1 className = "header-font">Hall of Fame</h1></Card.Title>
                     <Card.Body>
                         <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
                     </Card.Body>
