@@ -21,8 +21,7 @@ class Stars {
 */
 
 class Web3ABI extends React.Component {
-
-
+    
     //state
     state = {
         addressETH: "",
@@ -71,6 +70,20 @@ class Web3ABI extends React.Component {
         getStarsResults = getStarsResults.toString()
 
         this.setState({ publicStars: getStarsResults });
+        console.log(getStarsResults[1]);
+        return getStarsResults;
+    }
+
+    //getPublishedStars
+    GetStars1() {
+        const Contract = this.Contract();
+        var getStarsResults = Contract.getPublishedStars();
+        // console.log(getStarsResults);
+        // getStarsResults = getStarsResults.toString()
+    //    console.log(getStarsResults); 
+        return getStarsResults;
+        
+        //this.setState({ publicStars: getStarsResults });
     }
 
     //publish stars name, introduction, avatarURL, votes"serendipity02","serendipity02","serendipity01",55"name", "introduction", "avatarURL", 55
