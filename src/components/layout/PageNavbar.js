@@ -4,7 +4,13 @@ import { FcLike } from "react-icons/fc";
 import MetaMaskAuth from './MetaMaskAuth';
 import { ethers } from 'ethers';
 
-
+const navTitle = {
+	fontSize:"18px"
+}
+const navBrand = {
+	display: "flex",
+    alignItems: "baseline"
+}
 
 function PageNavbar() {
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -35,18 +41,18 @@ function PageNavbar() {
 
 	return (
 		<div>
-			<Navbar>
+			<Navbar fixed="top">
 				<Container>
-					<Navbar.Brand href="/home"><FcLike size={20} /> Fans Club</Navbar.Brand>
+					<Navbar.Brand style = {navBrand} href="/home"><FcLike size={28} /><h3 className = "header-font">  Fans Club</h3></Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					
 						<Nav className="justify-content-center">
-							<Nav.Link href="/#chartdiv">Vote</Nav.Link>
-							<Nav.Link href="/shop">Fan Shop</Nav.Link>
+							<Nav.Link href="/#chartdiv"><div style={navTitle}>Vote</div></Nav.Link>
+							<Nav.Link href="/shop"><div style={navTitle}>Fan Shop</div></Nav.Link>
 							{/* <Nav.Link href="/myaccount">My Account</Nav.Link> */}
-							<Nav.Link href="/manage">Manage Idols</Nav.Link>
+							<Nav.Link href="/manage"><div style={navTitle}>Manage Idols</div></Nav.Link>
 							{/* manage page should be replaced by publish page*/}
-                            {admin?<Nav.Link href="publish">Publish</Nav.Link> : ""} 
+                            {admin?<Nav.Link href="publish"><div style={navTitle}>Publish</div></Nav.Link> : ""} 
 						</Nav>
 					
 					<MetaMaskAuth setAdmin={setAdmin}/>

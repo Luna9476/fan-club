@@ -1,8 +1,13 @@
 .main {
   margin: 3rem auto;
   width: 95%;
-  height: 88%;
+  height: 100%;
   max-width: 100rem;
   display: flex;
   justify-content: center;
+}
+
+.occupy {
+  width: 95%;
+  height: 5%;
 }

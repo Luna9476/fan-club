@@ -13,6 +13,10 @@ const shopStyle = {
 const checkOutBGStyle = {
     border:"1px solid rgb(10 10 10 / 13%)", 
     borderRadius:"0rem", 
+    position: "fixed",
+    bottom: "0px",
+    left: "0px",
+    right: "0px",
     width:"100vw", 
     height:"15vh"
 }
