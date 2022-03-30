@@ -56,9 +56,10 @@ class Web3ABI extends React.Component {
     }
 
     //isAdmin
-    IsAAdmin() {
+    async IsAAdmin() {
         const Contract = this.Contract();
-        console.log(Contract.isAdmin())
+        console.log(await Contract.isAdmin())
+        return await Contract.isAdmin();
     }
 
 
@@ -124,6 +125,12 @@ class Web3ABI extends React.Component {
         console.log(TransRecord)
 
         this.setState({ transRecord: TransRecord });
+    }
+
+    async GetBalanceInfo() {
+        const Contract = this.Contract();
+        var BalanceInfo = await Contract.getBalanceInfo();
+        return BalanceInfo;
     }
 
     render() {
