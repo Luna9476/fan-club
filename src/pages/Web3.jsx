@@ -79,15 +79,10 @@ class Web3ABI extends React.Component {
     GetStars1() {
         const Contract = this.Contract();
         var getStarsResults = Contract.getPublishedStars();
-        // console.log(getStarsResults);
-        // getStarsResults = getStarsResults.toString()
-    //    console.log(getStarsResults); 
         return getStarsResults;
-        
-        //this.setState({ publicStars: getStarsResults });
     }
 
-    //publish stars name, introduction, avatarURL, votes"serendipity02","serendipity02","serendipity01",55"name", "introduction", "avatarURL", 55
+    //publish stars name, introduction, avatarURL, votes "name", "introduction", "avatarURL", 55
     //"白敬亭","http://233","怀柔王子",55
     PublishStar(name, introduction, avatarURL, votes){
         const Contract = this.Contract();    
@@ -99,7 +94,6 @@ class Web3ABI extends React.Component {
     VoteStars() {
         const Contract = this.Contract();
         Contract.vote(1, 2, "v");
-
     }
 
     // Buy gift tokens  BuyTicket(string memory _time)
@@ -111,10 +105,8 @@ class Web3ABI extends React.Component {
     // Refund gift tokens
     //function refund(uint ethRefund, string memory _time)
     RefundToken() {
-
         const Contract = this.Contract();
         Contract.refund()
-
     }
 
     // Get user transaction records
@@ -130,7 +122,8 @@ class Web3ABI extends React.Component {
     async GetBalanceInfo() {
         const Contract = this.Contract();
         var BalanceInfo = await Contract.getBalanceInfo();
-        return BalanceInfo;
+        console.log(BalanceInfo.toString())
+        return await BalanceInfo;
     }
 
     render() {
@@ -148,6 +141,7 @@ class Web3ABI extends React.Component {
                 <button onClick={() => this.VoteStars()}>vote stars</button>
                 <button onClick={() => this.GetTransRecord()}>GetTransRecord</button>
                 <button onClick={() => this.IsAAdmin()}>IsAdmin?</button>
+                <button onClick={() => this.GetBalanceInfo()}>GetBalanceInfo</button>
             </div>
 
         )

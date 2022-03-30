@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Container, Nav, Button, Form, Modal, Row, Col } from 'react-bootstrap';
 import { BsFillHeartFill, BsPersonCircle } from "react-icons/bs";
+import { Navigate } from "react-router-dom";
 import { BiLinkExternal } from "react-icons/bi"
 import { ethers } from 'ethers';
 
@@ -34,6 +35,7 @@ export default function MetaMaskAuth({ setAdmin }) {
     const disconnect = () => {
         setShowModal(false);
         setUserAddress("")
+        window.location.href="/home"
     }
 
     useAccountEffect(() => {

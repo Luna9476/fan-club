@@ -7,17 +7,38 @@ import { Link } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 import RefundConfirm from './RefundConfirm'
 
-export default function Myaccount() {
-    const [show, setShow] = useState(false);
+import Web3ABI from './/Web3';
+let w3 = new Web3ABI();
 
+export default function Myaccount() {
+
+    const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [balance, setBalance] = useState(0)
+    const getBalance = async () => {
+        const balance = await w3.GetBalanceInfo()
+        setBalance(balance)
+        console.log(balance)
+    }
+ 
+   const balanceEther = balance.toString().split(',')
+   console.log('balanceEther', balanceEther[2])
+    useEffect( () => {
+        getBalance()
+    }, [])
+
+    // useEffect( () => {
+    //     console.log(balance[1])
+    // }, [balance])
+
     return (
         <Container className='form-border'>
             <Card border="primary" style={{ width: '15rem' }}>
                 <Card.Header style={{ height: '2rem' }}>Account Balance</Card.Header>
                 <Card.Body>
-                    <Card.Title>1248 Ether</Card.Title>
+                    <Card.Title>{balanceEther[1]} Ether</Card.Title>
                     <Button variant="primary" onClick={handleShow}>
                         Refund
                     </Button>
@@ -30,7 +51,7 @@ export default function Myaccount() {
                                 <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
                                     <Form.Control type="number" placeholder="Input Account" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                                     <Form.Text className="text-muted">
-                                        Available Refunds(Votes): 1223
+                                        Available Refunds(Votes):{balanceEther[0]}
                                     </Form.Text>
                                 </Form.Group>
                             </Form>
@@ -91,6 +112,8 @@ export default function Myaccount() {
             </Table>
         </Container>
     )
+
+
 }
 
 
