@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Feedback from 'react-bootstrap/esm/Feedback'
+import Feedback from '../components/Feedback'
 
 const feedbackStyle = {
   display: "flex",
@@ -16,10 +16,10 @@ export default class RefundConfirm extends Component {
   render() {
     return (
       <Feedback
-        image="ticket.jpeg"
-        text="Order Submitted"
+        image="refund.jpg"
+        text="Refund Order Submitted"
         primaryButtonText="View on Etherscan"
-        secondaryButtonText="Shop Again">
+        secondaryButtonText="Refund Again">
       </Feedback>
     )
   }
