@@ -1,4 +1,4 @@
-//import { Button } from "bootstrap";
+
 import React from "react";
 
 //eth
@@ -6,19 +6,6 @@ import { ethers } from "ethers";
 import { contractAddress, contractABI } from "./Contract"
 
 
-
-/*
-class Stars {
-    constructor( name,introduction,avatarURL,votes) {
-        //this.id = id;
-        this.name = name;
-        this.introduction= introduction;
-        this.avatarURL = avatarURL;
-        this.votes = votes;
-    }
-    
-}
-*/
 
 class Web3ABI extends React.Component {
     
@@ -29,7 +16,7 @@ class Web3ABI extends React.Component {
         transRecord: []
     }
 
-    //check metemaske
+    //check metamask
     async checkMetamask() {
         const { ethereum } = window;
         if (!ethereum) {
