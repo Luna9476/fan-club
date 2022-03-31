@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Container, Nav, Button, Form, Modal, Row, Col } from 'react-bootstrap';
-import { BsFillHeartFill, BsPersonCircle } from "react-icons/bs";
-import { Navigate } from "react-router-dom";
+import { Container, Nav, Button, Form, Modal, Row, Col } from 'react-bootstrap';
+import { BsPersonCircle } from "react-icons/bs";
 import { BiLinkExternal } from "react-icons/bi"
 import { ethers } from 'ethers';
 
 import { contractAddress, contractABI } from "../../pages/Contract"
-
-
-import Web3ABI from '../../pages/Web3';
-import { sin } from "@amcharts/amcharts5/.internal/core/util/Math";
-let w3 = new Web3ABI();
-
 
 const useAccountEffect = (func, deps) => {
     const mounted = React.useRef(false);
@@ -21,12 +14,21 @@ const useAccountEffect = (func, deps) => {
         } else {
             mounted.current = true;
         }
-    }, [deps])
+    }, [deps, func])
 }
 
 export default function MetaMaskAuth({ setAdmin }) {
     const [userAddress, setUserAddress] = useState("");
     const [showModal, setShowModal] = useState(false)
+
+
+	useEffect(() => {
+		const loggedinUser = localStorage.getItem("user")
+		if (loggedinUser) {
+			const foundUser = JSON.parse(loggedinUser)
+			setUserAddress(foundUser)
+		}
+	}, []);
 
     const handleClose = () => {
         setShowModal(false);
@@ -34,23 +36,34 @@ export default function MetaMaskAuth({ setAdmin }) {
 
     const disconnect = () => {
         setShowModal(false);
-        setUserAddress("")
-        window.location.href="/home"
+        setUserAddress("");
+        localStorage.removeItem("user");
+        window.location.href="/home";
     }
 
-    useAccountEffect(() => {
-        const Provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = Provider.getSigner();
+    /**
+     * Each time we change the user address, check whether the new address is admin or not
+     */
+    useAccountEffect(async () => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+        // Prompt user for account connections
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+
         const Contract = new ethers.Contract(contractAddress, contractABI, signer);
-        // console.log(await Contract.isAdmin())
-        Contract.isAdmin().then(admin => setAdmin(admin));
+        Contract.isAdmin().then((admin) => {
+            setAdmin(admin)
+        });
     }, [setUserAddress]);
 
-
+    /**
+     * If the metamask account changes
+     */
     window.ethereum.on('accountsChanged', (accounts) => {
         setUserAddress(accounts[0])
     });
 
+ 
     const connect = async (onConnected) => {
         if (!window.ethereum) {
             alert("Get MetaMask!");
@@ -61,8 +74,10 @@ export default function MetaMaskAuth({ setAdmin }) {
             method: "eth_requestAccounts",
         });
         onConnected(accounts[0]);
+        localStorage.setItem("user", JSON.stringify(accounts[0]))
     }
 
+    
     return (
         userAddress ? (
             <>
