@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Container, Nav, Button, Form, Modal, Row, Col } from 'react-bootstrap';
-import { BsFillHeartFill, BsPersonCircle } from "react-icons/bs";
-import { Navigate } from "react-router-dom";
+import { Container, Nav, Button, Form, Modal, Row, Col } from 'react-bootstrap';
+import { BsPersonCircle } from "react-icons/bs";
 import { BiLinkExternal } from "react-icons/bi"
 import { ethers } from 'ethers';
 
@@ -9,7 +8,6 @@ import { contractAddress, contractABI } from "../../pages/Contract"
 
 
 import Web3ABI from '../../pages/Web3';
-import { sin } from "@amcharts/amcharts5/.internal/core/util/Math";
 let w3 = new Web3ABI();
 
 
@@ -27,6 +25,16 @@ const useAccountEffect = (func, deps) => {
 export default function MetaMaskAuth({ setAdmin }) {
     const [userAddress, setUserAddress] = useState("");
     const [showModal, setShowModal] = useState(false)
+
+
+	useEffect(() => {
+		const loggedinUser = localStorage.getItem("user")
+        console.log(loggedinUser)
+		if (loggedinUser) {
+			const foundUser = JSON.parse(loggedinUser)
+			setUserAddress(foundUser)
+		}
+	}, []);
 
     const handleClose = () => {
         setShowModal(false);
@@ -61,7 +69,12 @@ export default function MetaMaskAuth({ setAdmin }) {
             method: "eth_requestAccounts",
         });
         onConnected(accounts[0]);
+
+        localStorage.setItem("user", JSON.stringify(accounts[0]))
+
     }
+
+    
 
     return (
         userAddress ? (
