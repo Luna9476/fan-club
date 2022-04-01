@@ -22,8 +22,6 @@ function PageNavbar() {
 
 	window.ethereum.on('chainChanged', chainChangedHandler);
 
-
-
 	return (
 		<div>
 			<Navbar fixed="top">

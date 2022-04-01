@@ -2,7 +2,7 @@ import contract from "../artifacts/contracts/Club.sol/Club.json"
 
 const contractABI = contract.abi;
 //contract address
-const contractAddress = "0xA777890Acc7E4aEC57151D0d1b5a8f66AF961f05";
+const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
 
 export {
 	contractAddress, contractABI

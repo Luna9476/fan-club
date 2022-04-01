@@ -43,7 +43,7 @@ class Web3ABI extends React.Component {
     }
 
     //isAdmin
-    async IsAAdmin() {
+    async isAdmin() {
         const Contract = this.Contract();
         console.log(await Contract.isAdmin())
         return await Contract.isAdmin();

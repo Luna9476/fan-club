@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Container, Nav, Button, Form, Modal, Row, Col } from 'react-bootstrap';
 import { BsPersonCircle } from "react-icons/bs";
 import { BiLinkExternal } from "react-icons/bi"
-import { ethers } from 'ethers';
 
-import { contractAddress, contractABI } from "../../pages/Contract"
+import Web3ABI from "../../pages/Web3"
+let w3 = new Web3ABI();
 
 const useAccountEffect = (func, deps) => {
     const mounted = React.useRef(false);
@@ -23,12 +23,14 @@ export default function MetaMaskAuth({ setAdmin }) {
 
 
 	useEffect(() => {
-		const loggedinUser = localStorage.getItem("user")
-		if (loggedinUser) {
-			const foundUser = JSON.parse(loggedinUser)
-			setUserAddress(foundUser)
-		}
-	}, []);
+        if (userAddress === "") {
+            const loggedinUser = localStorage.getItem("user")
+            if (loggedinUser) {
+                const foundUser = JSON.parse(loggedinUser)
+                setUserAddress(foundUser)
+            }
+        }
+	}, [userAddress]);
 
     const handleClose = () => {
         setShowModal(false);
@@ -45,36 +47,32 @@ export default function MetaMaskAuth({ setAdmin }) {
      * Each time we change the user address, check whether the new address is admin or not
      */
     useAccountEffect(async () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
-        // Prompt user for account connections
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
-
-        const Contract = new ethers.Contract(contractAddress, contractABI, signer);
-        Contract.isAdmin().then((admin) => {
+        w3.isAdmin().then((admin) => {
             setAdmin(admin)
         });
     }, [setUserAddress]);
+
 
     /**
      * If the metamask account changes
      */
     window.ethereum.on('accountsChanged', (accounts) => {
-        setUserAddress(accounts[0])
+        setUserAddress(accounts[0]);
     });
 
  
-    const connect = async (onConnected) => {
+    const connect = (onConnected) => {
         if (!window.ethereum) {
             alert("Get MetaMask!");
             return;
         }
-
-        const accounts = await window.ethereum.request({
+        window.ethereum.request({
             method: "eth_requestAccounts",
+        }).then(accounts => {
+            onConnected(accounts[0]);
+            localStorage.setItem("user", JSON.stringify(accounts[0]));
         });
-        onConnected(accounts[0]);
-        localStorage.setItem("user", JSON.stringify(accounts[0]))
+
     }
 
     
