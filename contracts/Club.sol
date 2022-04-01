@@ -85,14 +85,14 @@ contract Club{
     }
 
     // For admin: return [tokenTotal, tokenPrice, balance, contract_ether]
-    // For fans: retrn [user's token,  user ether, 0, 0]
+    // For fans: retrn [user's token,  user ether, tokenPrice, 0]
     function getBalanceInfo() public view returns (
         uint, uint, uint, uint) {
         if(msg.sender == admin)
             return (tokenTotal, tokenPrice, balanceTokens, address(this).balance);
         console.log(msg.sender.balance);
         
-        return (balances[msg.sender], msg.sender.balance,0,0);
+        return (balances[msg.sender], msg.sender.balance,tokenPrice,0);
     }
 
     // Buy gift tokens

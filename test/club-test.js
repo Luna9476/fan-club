@@ -33,6 +33,7 @@ describe("HardHat Test for Fan Club Smart Contract", function () {
         const getBalanceNumofFan = await hardhatToken.connect(fan1.address).getBalanceInfo();
         await expect(getBalanceNumofFan[0].toNumber()).to.be.equal(0);
         await expect(getBalanceNumofFan[1]).to.be.equal(await provider.getBalance(fan1.address));
+        await expect(getBalanceNumofFan[2]).to.be.equal(tokenPrice);
     });
 
     it('2. The fan can buy token and the balance of the smart contract and the fan should be adjusted correctly', async () => {
@@ -52,6 +53,8 @@ describe("HardHat Test for Fan Club Smart Contract", function () {
         await expect(balanceDiffofAdmin).to.be.equal(ethBought / tokenPrice);
         const etherDiffofAdminBuy = etherBalanceOfAdminAfterBuy - etherBalanceOfAdminBeforeBuy;
         await expect(etherDiffofAdminBuy.toString()).to.equal(ethBought);
+
+        const tt = hardhatToken.connect(owner).buy(current.toLocaleString(), { from: owner.address, value: ethBought });
     });
 
     it('3. The fan can get refund with requested amount of tokens', async () => {
@@ -75,13 +78,13 @@ describe("HardHat Test for Fan Club Smart Contract", function () {
         await expect(balanceDiffofAdmin1).to.be.equal((ethBought - ethRefund) / tokenPrice);
     });
 
-    it('3.1. The fan can get refund with requested amount of tokens',async() =>{
-        console.log(await provider.getBalance(fan4.address));
-        await hardhatToken.connect(fan4).buy(current.toLocaleString(),{from: fan4.address, value: toWei("10")});//(0.001~10)
-        console.log(await provider.getBalance(fan4.address));
-        await hardhatToken.connect(fan4).testTransfer(toWei("0.001"));//
-        console.log(await provider.getBalance(fan4.address));
-    });
+    // it('3.1. The fan can get refund with requested amount of tokens',async() =>{
+    //     console.log(await provider.getBalance(fan4.address));
+    //     await hardhatToken.connect(fan4).buy(current.toLocaleString(),{from: fan4.address, value: toWei("10")});//(0.001~10)
+    //     console.log(await provider.getBalance(fan4.address));
+    //     await hardhatToken.connect(fan4).testTransfer(toWei("0.001"));//
+    //     console.log(await provider.getBalance(fan4.address));
+    // });
 
     it('4. Fans don not have permissions to publish new stars', async () => {
         await expect(hardhatToken.connect(fan4).publish("TEST", "TEST", "https://TEST.jpg", 2, fan1.getAddress())).to.be.reverted;
@@ -158,5 +161,13 @@ describe("HardHat Test for Fan Club Smart Contract", function () {
         // Get all stars
         const getStars = await hardhatToken.connect(fan8).getPublishedStars();
         expect(getStars[0].length).to.be.equal(2);
+    });
+
+    it('9. Check Admin', async () => {
+        // Publish two new stars
+        const r1 = await hardhatToken.connect(fan1).isAdmin();
+        const r2 = await hardhatToken.connect(owner).isAdmin();
+        console.log(r1);
+        console.log(r2);
     });
 });
