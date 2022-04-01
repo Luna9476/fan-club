@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
 html, body, #root, #root>div {
   height: 100%
 }
@@ -59,6 +60,10 @@ html, body, #root, #root>div {
 
 .form-border h3 {
   text-align: left;
+}
+
+.header-font{
+  font-family: 'Fredericka the Great', cursive;
 }
 
 

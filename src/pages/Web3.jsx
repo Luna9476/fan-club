@@ -1,4 +1,4 @@
-//import { Button } from "bootstrap";
+
 import React from "react";
 
 //eth
@@ -7,22 +7,8 @@ import { contractAddress, contractABI } from "./Contract"
 
 
 
-/*
-class Stars {
-    constructor( name,introduction,avatarURL,votes) {
-        //this.id = id;
-        this.name = name;
-        this.introduction= introduction;
-        this.avatarURL = avatarURL;
-        this.votes = votes;
-    }
-    
-}
-*/
-
 class Web3ABI extends React.Component {
-
-
+    
     //state
     state = {
         addressETH: "",
@@ -30,7 +16,7 @@ class Web3ABI extends React.Component {
         transRecord: []
     }
 
-    //check metemaske
+    //check metamask
     async checkMetamask() {
         const { ethereum } = window;
         if (!ethereum) {
@@ -57,9 +43,10 @@ class Web3ABI extends React.Component {
     }
 
     //isAdmin
-    IsAAdmin() {
+    async isAdmin() {
         const Contract = this.Contract();
-        console.log(Contract.isAdmin())
+        console.log(await Contract.isAdmin())
+        return await Contract.isAdmin();
     }
 
 
@@ -71,9 +58,18 @@ class Web3ABI extends React.Component {
         getStarsResults = getStarsResults.toString()
 
         this.setState({ publicStars: getStarsResults });
+        console.log(getStarsResults[1]);
+        return getStarsResults;
     }
 
-    //publish stars name, introduction, avatarURL, votes"serendipity02","serendipity02","serendipity01",55"name", "introduction", "avatarURL", 55
+    //getPublishedStars
+    GetStars1() {
+        const Contract = this.Contract();
+        var getStarsResults = Contract.getPublishedStars();
+        return getStarsResults;
+    }
+
+    //publish stars name, introduction, avatarURL, votes "name", "introduction", "avatarURL", 55
     //"白敬亭","http://233","怀柔王子",55
     PublishStar(name, introduction, avatarURL, votes){
         const Contract = this.Contract();    
@@ -85,7 +81,6 @@ class Web3ABI extends React.Component {
     VoteStars() {
         const Contract = this.Contract();
         Contract.vote(1, 2, "v");
-
     }
 
     // Buy gift tokens  BuyTicket(string memory _time)
@@ -97,10 +92,8 @@ class Web3ABI extends React.Component {
     // Refund gift tokens
     //function refund(uint ethRefund, string memory _time)
     RefundToken() {
-
         const Contract = this.Contract();
         Contract.refund()
-
     }
 
     // Get user transaction records
@@ -111,6 +104,13 @@ class Web3ABI extends React.Component {
         console.log(TransRecord)
 
         this.setState({ transRecord: TransRecord });
+    }
+
+    async GetBalanceInfo() {
+        const Contract = this.Contract();
+        var BalanceInfo = await Contract.getBalanceInfo();
+        console.log(BalanceInfo.toString())
+        return await BalanceInfo;
     }
 
     render() {
@@ -128,6 +128,7 @@ class Web3ABI extends React.Component {
                 <button onClick={() => this.VoteStars()}>vote stars</button>
                 <button onClick={() => this.GetTransRecord()}>GetTransRecord</button>
                 <button onClick={() => this.IsAAdmin()}>IsAdmin?</button>
+                <button onClick={() => this.GetBalanceInfo()}>GetBalanceInfo</button>
             </div>
 
         )

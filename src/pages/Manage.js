@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import InputGroup from 'react-bootstrap/InputGroup'
 import Form from 'react-bootstrap/Form'
 import { Button, Container } from "react-bootstrap";
 
@@ -14,12 +13,14 @@ export default class Manage extends Component {
             name: '',
             introduction: '',
             avatarURL: '',
-            votes: 100
+            votes: ''
         };
         this.handleName = this.handleName.bind(this);
         this.handleIntro = this.handleIntro.bind(this);
         this.handleURL = this.handleURL.bind(this);
+        this.handleVotes = this.handleVotes.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     handleName(event) {
@@ -30,6 +31,9 @@ export default class Manage extends Component {
     }
     handleURL(event) {
         this.setState({ avatarURL: event.target.value });
+    }
+    handleVotes(event) {
+        this.setState({ votes: event.target.value });
     }
 
     handleSubmit(event) {
@@ -55,6 +59,10 @@ export default class Manage extends Component {
 
                     <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicAvatar">
                         <Form.Control as="textarea" placeholder="Introduction" aria-label="With textarea" aria-describedby="basic-addon2" value={this.introduction} onChange={this.handleIntro} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
+                        <Form.Control type="text" placeholder="Votes" aria-label="Recipient's username" aria-describedby="basic-addon2" value={this.name} onChange={this.handleVotes} />
                     </Form.Group>
 
                     <Button variant="primary" type="submit" onClick={() => { }}>

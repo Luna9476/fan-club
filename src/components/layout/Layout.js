@@ -5,6 +5,7 @@ function Layout(props) {
   return (
     <div>
       <PageNavbar />
+      <div className={classes.occupy}></div>
       <main className={classes.main}>{props.children}</main>
     </div>
   );
