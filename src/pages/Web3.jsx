@@ -7,9 +7,10 @@ import { contractAddress, contractABI } from "./Contract"
 
 
 
-class Web3ABI {
+class Web3ABI extends React.Component{
     //stat
     constructor(){
+        super();
         this.addressETH =  "";
         this.publicStars = [];
         this.transRecord = [];
