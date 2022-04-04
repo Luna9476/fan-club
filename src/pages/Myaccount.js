@@ -9,7 +9,7 @@ import RefundConfirm from './RefundConfirm'
 import { ethers } from 'ethers';
 import { contractAddress, contractABI } from './Contract';
 
-import Web3ABI from './/Web3';
+import Web3ABI from './Web3';
 let w3 = new Web3ABI();
 
 export default function Myaccount() {
