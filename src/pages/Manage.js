@@ -1,26 +1,42 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState, Component } from 'react'
 import Form from 'react-bootstrap/Form'
+import Table from 'react-bootstrap/Table'
+import Modal from 'react-bootstrap/Modal'
 import { Button, Container } from "react-bootstrap";
 
 //add web3ABI
 import Web3ABI from './Web3';
-
 let w3 = new Web3ABI();
+
 export default class Manage extends Component {
+    componentDidMount() {
+        const getStar = async () => {
+            var stars = await w3.GetStars1();
+            let starRes = stars[0];
+            this.setState({ stars: starRes })
+        }
+        getStar();
+    }
+
+
     constructor(props) {
         super(props);
         this.state = {
             name: '',
             introduction: '',
             avatarURL: '',
-            votes: ''
+            votes: '',
+            show: false,
+            stars: []
         };
+
         this.handleName = this.handleName.bind(this);
         this.handleIntro = this.handleIntro.bind(this);
         this.handleURL = this.handleURL.bind(this);
         this.handleVotes = this.handleVotes.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     handleName(event) {
@@ -39,36 +55,86 @@ export default class Manage extends Component {
     handleSubmit(event) {
         console.log(this.state)
         event.preventDefault();
-        w3.PublishStar(this.state.name, this.state.introduction, this.state.avatarURL, this.state.votes)             
+        w3.PublishStar(this.state.name, this.state.introduction, this.state.avatarURL, this.state.votes)
     }
 
+    handleShow = () => {
+        this.setState({ show: true });
+    };
+    handleClose = () => {
+        this.setState({ show: false });
+    };
+
+
+
     render() {
+        const { stars } = this.state
         return (
             <Container className='form-border'>
-                <h3>Post Idols</h3>
                 <Web3ABI />
-                <h3>Post Idols000000000</h3>
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
-                        <Form.Control type="text" placeholder="Idol's Name" aria-label="Recipient's username" aria-describedby="basic-addon2" value={this.name} onChange={this.handleName} />
-                    </Form.Group>
+                <h3>Idols' Information</h3>
+                <Button variant="primary" onClick={this.handleShow}>
+                    Post New Idols
+                </Button>
 
-                    <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicAvatar">
-                        <Form.Control type="url" placeholder="Avatar URL" aria-label="Recipient's username" aria-describedby="basic-addon2" value={this.avatarURL} onChange={this.handleURL} />
-                    </Form.Group>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Idol's Name</th>
+                            <th>Introduction</th>
+                            <th>Current Votes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {stars.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item[1]}</td>
+                                <td>{item[2]}</td>
+                                <td>{item.votes.toString()}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Post New Idols</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
+                                <Form.Control type="text" placeholder="Idol's Name" aria-label="Recipient's username" aria-describedby="basic-addon2" value={this.name} onChange={this.handleName} />
+                            </Form.Group>
 
-                    <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicAvatar">
-                        <Form.Control as="textarea" placeholder="Introduction" aria-label="With textarea" aria-describedby="basic-addon2" value={this.introduction} onChange={this.handleIntro} />
-                    </Form.Group>
+                            <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicAvatar">
+                                <Form.Control type="url" placeholder="Avatar URL" aria-label="Recipient's username" aria-describedby="basic-addon2" value={this.avatarURL} onChange={this.handleURL} />
+                            </Form.Group>
 
-                    <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
-                        <Form.Control type="text" placeholder="Votes" aria-label="Recipient's username" aria-describedby="basic-addon2" value={this.name} onChange={this.handleVotes} />
-                    </Form.Group>
+                            <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicAvatar">
+                                <Form.Control as="textarea" placeholder="Introduction" aria-label="With textarea" aria-describedby="basic-addon2" value={this.introduction} onChange={this.handleIntro} />
+                            </Form.Group>
 
-                    <Button variant="primary" type="submit" onClick={() => { }}>
-                        Submit
-                    </Button>
-                </Form>
+                            <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
+                                <Form.Control type="text" placeholder="Votes" aria-label="Recipient's username" aria-describedby="basic-addon2" value={this.name} onChange={this.handleVotes} />
+                            </Form.Group>
+
+                            <Button variant="primary" type="submit" onClick={() => { }}>
+                                Submit
+                            </Button>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </Button>
+                        {/* <Button variant="primary" type="submit" onClick={() => { }}>
+                            Submit
+                        </Button> */}
+                    </Modal.Footer>
+                </Modal>
+
+
             </Container>
         )
     }

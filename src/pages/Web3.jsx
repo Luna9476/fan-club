@@ -116,12 +116,12 @@ class Web3ABI extends React.Component {
     render() {
         return (
             <div>
-                <div>THIS IS FOR T</div>
+                {/* <div>THIS IS FOR T</div> */}
                 <h2>{ }</h2>
                 <h3>{this.state.addressETH}</h3>
                 <button onClick={() => this.checkMetamask()}>login</button>
                 <button onClick={() => this.Contract()}>contract</button>
-                <h3>stars</h3>
+                {/* <h3>stars</h3> */}
                 <h3>{this.state.publicStars}</h3>
                 <button onClick={() => this.GetStars()}>show stars</button>
                 <button onClick={() => this.PublishStar()}>publish stars</button>
