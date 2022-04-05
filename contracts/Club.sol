@@ -64,8 +64,8 @@ contract Club{
 
     // Vote for star
     function vote(uint starId, uint giftAmount, string memory _time) public {
-        require(starId < stars.length);
-        require(giftAmount <= balances[msg.sender]);
+        require(starId < stars.length,"This star has not been published!");
+        require(giftAmount <= balances[msg.sender],"You don't have enough gift tokens!");
         Star storage star = stars[starId];
         star.votes += giftAmount;
         balances[msg.sender] -= giftAmount;
@@ -85,22 +85,22 @@ contract Club{
     }
 
     // For admin: return [tokenTotal, tokenPrice, balance, contract_ether]
-    // For fans: retrn [user's token,  user ether, 0, 0]
+    // For fans: retrn [user's token,  user ether, tokenPrice, 0]
     function getBalanceInfo() public view returns (
         uint, uint, uint, uint) {
         if(msg.sender == admin)
             return (tokenTotal, tokenPrice, balanceTokens, address(this).balance);
         console.log(msg.sender.balance);
         
-        return (balances[msg.sender], msg.sender.balance,0,0);
+        return (balances[msg.sender], msg.sender.balance,tokenPrice,0);
     }
 
     // Buy gift tokens
     function buy(string memory _time) public payable {
-        require(msg.value >= tokenPrice, "Not enough payment!");
-        require(msg.value <= msg.sender.balance);
+        require(msg.value >= tokenPrice, "Not enough payment! Please pay for at least one gift token!");
+        require(msg.value <= msg.sender.balance, "You don't have enough balance for this transaction!");
         uint tokensToBuy = msg.value / tokenPrice;
-        require(tokensToBuy <= balanceTokens, "Not enough tokens"); // remaing token is sufficient
+        require(tokensToBuy <= balanceTokens, "Not enough tokens in our FAN-CLUB!"); // remaing token is sufficient
         // update balance
         balances[msg.sender] += tokensToBuy;
         balanceTokens -= tokensToBuy;
@@ -119,8 +119,8 @@ contract Club{
     // Refund gift tokens
     function refund(uint ethRefund, string memory _time) public returns(bool success){
         uint tokenRefund = ethRefund / tokenPrice;
-        require(tokenRefund > 0);
-        require(tokenRefund <= balances[msg.sender]); // User should have sufficient token to sell
+        require(tokenRefund > 0,"Please make sure the refund amount bigger than 0!");
+        require(tokenRefund <= balances[msg.sender],"Please make sure the token refunded smaller than your balance!"); // User should have sufficient token to sell
         balances[msg.sender] -= tokenRefund;
         balanceTokens += tokenRefund;
         payable(msg.sender).transfer(ethRefund);

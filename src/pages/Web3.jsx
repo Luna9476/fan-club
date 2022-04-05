@@ -1,31 +1,28 @@
 
 import React from "react";
-
+import Web3 from "web3";
 //eth
 import { ethers } from "ethers";
 import { contractAddress, contractABI } from "./Contract"
 
 
 
-class Web3ABI extends React.Component {
-    
-    //state
-    state = {
-        addressETH: "",
-        publicStars: [],
-        transRecord: []
+class Web3ABI extends React.Component{
+    //stat
+    constructor(){
+        super();
+        this.addressETH =  "";
+        this.publicStars = [];
+        this.transRecord = [];
     }
 
     //check metamask
     async checkMetamask() {
         const { ethereum } = window;
         if (!ethereum) {
-            alert("Please install Metemaske");
+            alert("Please install Metamask");
         }
         console.log("metamask ok");
-        const addressETH = await this.Provider().send("eth_requestAccounts", []);
-        console.log(addressETH);
-        this.setState({ addressETH: addressETH });
     }
 
     //provider
@@ -34,17 +31,20 @@ class Web3ABI extends React.Component {
     }
 
     //contract
-    Contract() {
+    async Contract() {
         const Provider = this.Provider();
         const signer = Provider.getSigner();
         const Contract = new ethers.Contract(contractAddress, contractABI, signer);
+        const addressETH = await this.Provider().send("eth_requestAccounts", []);
+        this.addressETH = addressETH;
+        console.log(this.addressETH);
         console.log(Contract)
         return Contract;
     }
 
     //isAdmin
-    async IsAAdmin() {
-        const Contract = this.Contract();
+    async isAdmin() {
+        const Contract = await this.Contract();
         console.log(await Contract.isAdmin())
         return await Contract.isAdmin();
     }
@@ -52,65 +52,86 @@ class Web3ABI extends React.Component {
 
     //getPublishedStars
     async GetStars() {
-        const Contract = this.Contract();
+        const Contract = await this.Contract();
         var getStarsResults = await Contract.getPublishedStars();
         console.log(getStarsResults);
         getStarsResults = getStarsResults.toString()
 
-        this.setState({ publicStars: getStarsResults });
+        this.publicStars = getStarsResults;
         console.log(getStarsResults[1]);
         return getStarsResults;
     }
 
     //getPublishedStars
-    GetStars1() {
-        const Contract = this.Contract();
+    async GetStars1() {
+        const Contract = await this.Contract();
         var getStarsResults = Contract.getPublishedStars();
         return getStarsResults;
     }
 
     //publish stars name, introduction, avatarURL, votes "name", "introduction", "avatarURL", 55
     //"白敬亭","http://233","怀柔王子",55
-    PublishStar(name, introduction, avatarURL, votes){
-        const Contract = this.Contract();    
+    async PublishStar(name, introduction, avatarURL, votes){
+        const Contract = await this.Contract();    
         console.log(name);
         Contract.publish(name, introduction, avatarURL, votes);      
     }
  
     //vote(uint starId, uint giftAmount, string memory _time)
-    VoteStars() {
-        const Contract = this.Contract();
+    async VoteStars() {
+        const Contract = await this.Contract();
         Contract.vote(1, 2, "v");
     }
 
     // Buy gift tokens  BuyTicket(string memory _time)
-    BuyTicket() {
-        const Contract = this.Contract();
-        Contract.buy("b");
+    async BuyTicket(price) {
+        const Contract = await this.Contract();
+        let web3 = new Web3(Web3.currentProvider)
+        let value = web3.utils.toWei(String(price), "ether");
+        console.log(value);
+        let currentTime = new Date();
+        console.log(currentTime.toLocaleString())
+        try {
+            let txHash = await Contract.buy(currentTime.toLocaleString(), {value: value});
+            console.log(txHash)
+            return [true, ""];
+        } catch(error) {
+            return [false, "😥 " + error.data.message];
+        }
     }
 
     // Refund gift tokens
     //function refund(uint ethRefund, string memory _time)
-    RefundToken() {
-        const Contract = this.Contract();
-        Contract.refund()
+    async RefundToken() {
+        const Contract = await this.Contract();
+        await Contract.refund()
     }
 
     // Get user transaction records
     //function getTransRecords()
     async GetTransRecord() {
-        const Contract = this.Contract();
+        const Contract = await this.Contract();
         var TransRecord = await Contract.getTransRecords()
         console.log(TransRecord)
 
-        this.setState({ transRecord: TransRecord });
+        this.transRecord = TransRecord;
     }
 
     async GetBalanceInfo() {
-        const Contract = this.Contract();
+        const Contract = await this.Contract();
         var BalanceInfo = await Contract.getBalanceInfo();
         console.log(BalanceInfo.toString())
         return await BalanceInfo;
+    }
+
+    async getEthBalanceOf() {
+        const Contract = await this.Contract(); 
+        console.log(this.addressETH[0])
+        let balance = await this.Provider().getBalance(this.addressETH[0]);
+        let etherBalance = ethers.utils.formatEther(balance)
+        etherBalance = (+etherBalance).toFixed(4);
+        console.log(etherBalance)
+        return etherBalance;
     }
 
     render() {
@@ -118,17 +139,18 @@ class Web3ABI extends React.Component {
             <div>
                 {/* <div>THIS IS FOR T</div> */}
                 <h2>{ }</h2>
-                <h3>{this.state.addressETH}</h3>
+                <h3>{this.addressETH}</h3>
                 <button onClick={() => this.checkMetamask()}>login</button>
                 <button onClick={() => this.Contract()}>contract</button>
-                {/* <h3>stars</h3> */}
-                <h3>{this.state.publicStars}</h3>
+                <h3>stars</h3>
+                <h3>{this.publicStars}</h3>
                 <button onClick={() => this.GetStars()}>show stars</button>
                 <button onClick={() => this.PublishStar()}>publish stars</button>
                 <button onClick={() => this.VoteStars()}>vote stars</button>
                 <button onClick={() => this.GetTransRecord()}>GetTransRecord</button>
-                <button onClick={() => this.IsAAdmin()}>IsAdmin?</button>
+                <button onClick={() => this.isAdmin()}>IsAdmin?</button>
                 <button onClick={() => this.GetBalanceInfo()}>GetBalanceInfo</button>
+                <button onClick={() => this.BuyTicket(1)}>Buy</button>
             </div>
 
         )
