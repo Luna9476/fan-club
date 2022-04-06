@@ -10,11 +10,12 @@ let w3 = new Web3ABI();
 
 
 export default class Pool extends Component {
-    componentDidMount() {
+    componentDidMount(props) {
         var stars=w3.GetStars1();
         const starRes=stars.then((result)=>{
             //return result[0];
             let starRes=result[0];
+            this.props.onSetStar(starRes);
             console.log(starRes[0]);
 
             let root = am5.Root.new("chartdiv");

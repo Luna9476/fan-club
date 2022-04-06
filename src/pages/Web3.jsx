@@ -78,9 +78,17 @@ class Web3ABI extends React.Component{
     }
  
     //vote(uint starId, uint giftAmount, string memory _time)
-    async VoteStars() {
+    async VoteStars(id, giftAmount) {
         const Contract = await this.Contract();
-        Contract.vote(1, 2, "v");
+        let currentTime = new Date();
+        try {
+            let txHash = await Contract.vote(id, giftAmount, currentTime.toLocaleString());
+            console.log(txHash)
+            return [true, "success"];
+        } catch(error) {
+            return [false, "😥 " + error.data.message];
+        } 
+
     }
 
     // Buy gift tokens  BuyTicket(string memory _time)
@@ -94,7 +102,7 @@ class Web3ABI extends React.Component{
         try {
             let txHash = await Contract.buy(currentTime.toLocaleString(), {value: value});
             console.log(txHash)
-            return [true, ""];
+            return [true, "success"];
         } catch(error) {
             return [false, "😥 " + error.data.message];
         }

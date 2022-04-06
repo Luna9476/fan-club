@@ -54,6 +54,7 @@ function Shop() {
 
     async function handleClick() {
         var status = await w3.BuyTicket(totalPrice);
+        console.log(status[0], status[1])
         if (status[0]){
             window.location.href = "/shopfeedback";
         } else {

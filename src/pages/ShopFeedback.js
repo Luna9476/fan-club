@@ -1,17 +1,6 @@
 import React, { Component } from 'react'
-import { Image, Button} from 'react-bootstrap';
 import Feedback from '../components/Feedback';
 
-const feedbackStyle = {
-  display:"flex",
-  flexDirection:"column",
-  justifyContent:"flex-start",
-  alignItems:"center"
-}
-const rowButtonStyle = {
-  display:"flex",
-  flexDirection:"row",
-}
 
 function ShopFeedback(props) {
     return (
