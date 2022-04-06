@@ -7,14 +7,12 @@ import { Card, Container } from "react-bootstrap";
 import Web3ABI from '../pages/Web3';
 let w3 = new Web3ABI();
 
-
-
 export default class Pool extends Component {
     componentDidMount() {
-        var stars=w3.GetStars1();
-        const starRes=stars.then((result)=>{
+        var stars = w3.GetStars1();
+        const starRes = stars.then((result) => {
             //return result[0];
-            let starRes=result[0];
+            let starRes = result[0];
             console.log(starRes[0]);
 
             let root = am5.Root.new("chartdiv");
@@ -33,22 +31,24 @@ export default class Pool extends Component {
                     paddingRight: 40
                 })
             );
-            
+
             console.log(starRes[0])
-            var starData=new Array();
-            for(var i=0;i<starRes.length;i++){
-                starData.push({name: starRes[i][1],
-                steps: starRes[i][4].toNumber(),
-                // steps: 100,
-                pictureSettings: {
-                    src: starRes[i][3]
-                }})
+            var starData = new Array();
+            for (var i = 0; i < starRes.length; i++) {
+                starData.push({
+                    name: starRes[i][1],
+                    steps: starRes[i][4].toNumber(),
+                    // steps: 100,
+                    pictureSettings: {
+                        src: starRes[i][3]
+                    }
+                })
             }
-            
-            starData.sort((a,b)=>(a.steps>b.steps)?1:-1);
+
+            starData.sort((a, b) => (a.steps > b.steps) ? 1 : -1);
             console.log(starData);
 
-            var data=starData;
+            var data = starData;
 
 
             var yRenderer = am5xy.AxisRendererY.new(root, {});
@@ -236,8 +236,8 @@ export default class Pool extends Component {
             })
             // chart.appear();
             this.root = root;
-            })
-        
+        })
+
     }
 
     handleHover(dataItem) {
@@ -252,9 +252,9 @@ export default class Pool extends Component {
 
     render() {
         return (
-            <Container style={{margin: "30px"}}>
+            <Container style={{ margin: "30px" }}>
                 <Card>
-                    <Card.Title className="text-center"><h1 className = "header-font">Hall of Fame</h1></Card.Title>
+                    <Card.Title className="text-center"><h1 className="header-font">Hall of Fame</h1></Card.Title>
                     <Card.Body>
                         <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
                     </Card.Body>

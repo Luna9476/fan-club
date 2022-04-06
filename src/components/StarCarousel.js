@@ -1,12 +1,32 @@
 import { Carousel } from "react-bootstrap";
+import React, { useEffect, useState, Component } from 'react'
+
+import Web3ABI from '../pages/Web3';
+let w3 = new Web3ABI();
 
 export default function StarCarousel() {
+
+    //get starUrl from promise
+    const[starUrl, setStarUrl] = useState()
+    const getStarUrl = async () => {
+        const starUrl = await w3.GetStars1();
+        setStarUrl(starUrl)
+        console.log('starUrl',starUrl)
+        console.log('starUrl[0]',starUrl[0])
+
+    }
+
+    // console.log('url',url)
+    useEffect(() => {
+        getStarUrl()
+    }, [])
+
     return (
         <Carousel>
             <Carousel.Item style={{height: '700px'}}>
                 <img
                     className="d-block w-100"
-                    src="BTS.jpeg"
+                    src= {starUrl[0][0][3]}
                     alt="First slide"
                 />
                 <Carousel.Caption>

@@ -115,6 +115,7 @@ class Web3ABI extends React.Component{
         console.log(TransRecord)
 
         this.transRecord = TransRecord;
+        return await TransRecord;
     }
 
     async GetBalanceInfo() {

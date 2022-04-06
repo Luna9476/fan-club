@@ -68,7 +68,7 @@ export default class Manage extends Component {
 
 
     render() {
-        const { stars } = this.state
+        // const { stars } = this.state
         return (
             <Container className='form-border'>
                 <Web3ABI />
@@ -87,7 +87,7 @@ export default class Manage extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {stars.map((item, index) => (
+                        {this.state.stars.map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item[1]}</td>

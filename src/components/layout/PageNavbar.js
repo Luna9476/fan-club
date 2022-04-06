@@ -32,6 +32,7 @@ function PageNavbar() {
 					<Nav className="justify-content-center">
 						<Nav.Link href="/#chartdiv"><div style={navTitle}>Vote</div></Nav.Link>
 						<Nav.Link href="/shop"><div style={navTitle}>Fan Shop</div></Nav.Link>
+						{/* <Nav.Link href="/manage"><div style={navTitle}>Manage Idols</div></Nav.Link> */}
 						{admin ? <Nav.Link href="/manage"><div style={navTitle}>Manage Idols</div></Nav.Link> : ""}
 					</Nav>
 
