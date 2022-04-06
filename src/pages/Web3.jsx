@@ -110,9 +110,21 @@ class Web3ABI extends React.Component{
 
     // Refund gift tokens
     //function refund(uint ethRefund, string memory _time)
-    async RefundToken() {
+    async RefundToken(price) {
         const Contract = await this.Contract();
-        await Contract.refund()
+        let web3 = new Web3(Web3.currentProvider)
+        let value = web3.utils.toWei(String(price), "ether");
+        console.log(value);
+        let currentTime = new Date();
+        console.log(currentTime.toLocaleString())
+        try {
+            let txHash = await Contract.refund(value, currentTime.toLocaleString());
+            console.log(txHash)
+            return [true, "success"];
+        } catch(error) {
+            return [false, "😥 " + error.data.message];
+        }
+       
     }
 
     // Get user transaction records

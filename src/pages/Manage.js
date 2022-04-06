@@ -18,7 +18,6 @@ export default class Manage extends Component {
         getStar();
     }
 
-
     constructor(props) {
         super(props);
         this.state = {

@@ -24,15 +24,3 @@ export default class RefundConfirm extends Component {
     )
   }
 }
-// function RefundConfirm(props) {
-//   return (
-//       <Feedback 
-//         image = "ticket.jpeg" 
-//         text = "Refund Submitted" 
-//         primarybuttontext = "View on Etherscan"
-//         secondarybuttontext = "Shop Again">
-//       </Feedback>
-//   );
-// }
-
-// export default RefundConfirm;

@@ -8,12 +8,13 @@ import Web3ABI from '../pages/Web3';
 let w3 = new Web3ABI();
 
 export default class Pool extends Component {
-    componentDidMount() {
+    componentDidMount(props) {
         var stars = w3.GetStars1();
         const starRes = stars.then((result) => {
             //return result[0];
             let starRes = result[0];
             console.log(starRes[0]);
+            this.props.onSetStar(starRes);
 
             let root = am5.Root.new("chartdiv");
 
@@ -47,9 +48,7 @@ export default class Pool extends Component {
 
             starData.sort((a, b) => (a.steps > b.steps) ? 1 : -1);
             console.log(starData);
-
             var data = starData;
-
 
             var yRenderer = am5xy.AxisRendererY.new(root, {});
             yRenderer.grid.template.set("visible", false);

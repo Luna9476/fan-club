@@ -49,8 +49,8 @@ function Shop() {
         getEthBalance();
     }, [currentEther])
     const balanceInfo = balance.toString().split(',');
-    const tokenPrice = balanceInfo[2]/10 ** 18;
-    const totalPrice = tokenPrice * currentEther;
+    const tokenPrice = balanceInfo[2]/10 ** 18; 
+    const totalPrice = tokenPrice * currentEther; 
 
     async function handleClick() {
         var status = await w3.BuyTicket(totalPrice);

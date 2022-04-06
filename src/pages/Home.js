@@ -23,6 +23,7 @@ export default function Home() {
     const handleShow = () => setShow(true);
     var status = ["", ""];
 
+
     async function handleSubmit() {
         console.log("id", id);
         console.log("vote", vote);

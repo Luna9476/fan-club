@@ -18,30 +18,57 @@ export default function Myaccount() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    //get balance info
+    const [balance, setBalance] = useState("-");
+    // const [ethBalance, setEthBalance] = useState("-"); 
+    const [currentEther, setCurrentEther] = useState("0");
+    async function getBalance() {
+        const balance = await w3.GetBalanceInfo()
+        setBalance(balance)
+        console.log('Balance Info %s', balance)
+    }
+
+    useEffect(() => {
+        getBalance();
+    }, [currentEther])
+    const balanceInfo = balance.toString().split(',');
+    const tokenPrice = balanceInfo[2] / 10 ** 18;
+    const totalPrice = tokenPrice * currentEther;
+
+    async function handleClick() {
+        var status = await w3.RefundToken(totalPrice);
+        console.log(status[0], status[1])
+        if (status[0]) {
+            window.location.href = "/refundconfirm";
+        } else {
+            alert(status[1]);
+        }
+    }
+
     //get transaction from promise
-    const[transact, setTransact] = useState()
+    const [transact, setTransact] = useState([])
     const getTransac = async () => {
         const transact = await w3.GetTransRecord()
-        setTransact(transact)
-        console.log('transac',transact[0])
+        setTransact(transact[0])
+        console.log('transac', transact)
     }
     useEffect(() => {
         getTransac()
     }, [])
 
-    
+
     //get balance from promise
-    const [balance, setBalance] = useState(0)
-    const getBalance = async () => {
-        const balance = await w3.GetBalanceInfo()
-        setBalance(balance)
-        console.log(balance)
-    }
-    const balanceEther = balance.toString().split(',')
-    console.log('balanceEther', balanceEther[2])
-    useEffect(() => {
-        getBalance()
-    }, [])
+    // const [balance, setBalance] = useState(0)
+    // const getBalance = async () => {
+    //     const balance = await w3.GetBalanceInfo()
+    //     setBalance(balance)
+    //     console.log(balance)
+    // }
+    // const balanceEther = balance.toString().split(',')
+    // console.log('balanceEther', balanceEther[2])
+    // useEffect(() => {
+    //     getBalance()
+    // }, [])
 
     //get admin from promise
     const [isShow, setIsShow] = useState(false)
@@ -59,8 +86,8 @@ export default function Myaccount() {
         // console.log(await Contract.isAdmin())
         console.log(admin)
     }, [])
-   
-   
+
+
     return (
         <>{isShow &&
             <>{admin ?
@@ -69,7 +96,7 @@ export default function Myaccount() {
                         <Card border="primary" style={{ width: '15rem' }}>
                             <Card.Header style={{ height: '2rem' }}>Account Balance</Card.Header>
                             <Card.Body>
-                                <Card.Title>{balanceEther[1]} TokenPrice</Card.Title>
+                                <Card.Title>{balanceInfo[1]} TokenPrice</Card.Title>
                                 <Button variant="primary" onClick={handleShow}>
                                     Refund
                                 </Button>
@@ -82,7 +109,7 @@ export default function Myaccount() {
                                             <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
                                                 <Form.Control type="number" placeholder="Input Account" aria-label="Recipient's username" aria-describedby="basic-addon2" />
                                                 <Form.Text className="text-muted">
-                                                    Available Refunds(Votes):{balanceEther[0]}
+                                                    Available Refunds(Votes):{balanceInfo[0]}
                                                 </Form.Text>
                                             </Form.Group>
                                         </Form>
@@ -98,56 +125,13 @@ export default function Myaccount() {
                                 </Modal>
                             </Card.Body>
                         </Card>
-                        <br />
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>FanAddress</th>
-                                    <th>TransType</th>
-                                    <th>Time</th>
-                                    <th>TransAmount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>aa</td>
-                                    <td>Vote</td>
-                                    <td>2022/3/24</td>
-                                    <td>23</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>bb</td>
-                                    <td>Buy</td>
-                                    <td>2022/3/24</td>
-                                    <td>56</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>cc</td>
-                                    <td>Buy</td>
-                                    <td>2022/3/24</td>
-                                    <td>77</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>dd</td>
-                                    <td>Refund</td>
-                                    <td>2022/3/24</td>
-                                    <td>46</td>
-                                </tr>
-
-                            </tbody>
-                        </Table>
                     </Container>
                 </div> :
                 <div>
                     <Card border="primary" style={{ width: '15rem' }}>
                         <Card.Header style={{ height: '2rem' }}>Account Balance</Card.Header>
                         <Card.Body>
-                            <Card.Title>{balanceEther[0]} Token</Card.Title>
+                            <Card.Title>{balanceInfo[0]} Token</Card.Title>
                             <Button variant="primary" onClick={handleShow}>
                                 Refund
                             </Button>
@@ -158,9 +142,10 @@ export default function Myaccount() {
                                 <Modal.Body>
                                     <Form>
                                         <Form.Group className="mb-3 input-group input-group-outline" controlId="formBasicName">
-                                            <Form.Control type="number" placeholder="Input Account" aria-label="Recipient's username" aria-describedby="basic-addon2" />
+                                            <Form.Control type="number" placeholder="Input Account" aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                                value={currentEther} onInput={e => setCurrentEther(e.target.value)} />
                                             <Form.Text className="text-muted">
-                                                Available Refunds(Votes):{balanceEther[0]}
+                                                Available Refunds(Votes):{balanceInfo[0]}
                                             </Form.Text>
                                         </Form.Group>
                                     </Form>
@@ -169,8 +154,8 @@ export default function Myaccount() {
                                     <Button variant="secondary" onClick={handleClose}>
                                         Close
                                     </Button>
-                                    <Button variant="primary" onClick={handleShow}>
-                                        <Link to="/refundconfirm">Confirm</Link>
+                                    <Button variant="primary" onClick={handleClick}>
+                                        Confirm
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
@@ -188,21 +173,15 @@ export default function Myaccount() {
                             </tr>
                         </thead>
                         <tbody>
-                        {/* {stars.map((item, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{item[1]}</td>
-                                <td>{item[2]}</td>
-                                <td>{item.votes.toString()}</td>
-                            </tr>
-                        ))} */}
-                            <tr>
-                                <td>1</td>
-                                <td>aa</td>
-                                <td>Vote</td>
-                                <td>2022/3/24</td>
-                                <td>23</td>
-                            </tr>
+                            {transact.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{item[0]}</td>
+                                    <td>{item[1]}</td>
+                                    <td>{item[2]}</td>
+                                    <td>{item[3].toString()}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </Table>
                 </div>
