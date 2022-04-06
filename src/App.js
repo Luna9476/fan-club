@@ -7,6 +7,7 @@ import Shop from './pages/Shop'
 import Myaccount from './pages/Myaccount';
 import RefundConfirm from './pages/RefundConfirm';
 import ShopFeedback from './pages/ShopFeedback';
+import VoteFeedback from './pages/VoteFeedback';
 import React, { Component } from 'react';
 
 
@@ -23,7 +24,8 @@ export default class App extends Component {
               <Route path="/manage" element={<Manage />}></Route>
               <Route path="/myaccount" element={<Myaccount />}></Route>
               <Route path="/refundconfirm" element={<RefundConfirm />}></Route>
-              <Route path="/shopfeedback" element={<ShopFeedback/>}></Route> 
+              <Route path="/shopfeedback" element={<ShopFeedback/>}></Route>
+              <Route path="/votefeedback" element={<VoteFeedback/>}></Route> 
             </Routes>
           </Layout>
         </BrowserRouter>
