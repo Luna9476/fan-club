@@ -7,8 +7,8 @@ function VoteFeedback(props) {
         <Feedback 
           image = "ticket.jpeg" 
           text = "Thank you for voting!" 
-          primaryButtonText = "View on Etherscan"
-          secondaryButtonText = "Vote Again">
+          primaryButtonText = "Vote Again"
+          goBackLink = "/home">
         </Feedback>
     );
   }
