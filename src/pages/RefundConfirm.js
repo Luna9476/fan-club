@@ -18,8 +18,8 @@ export default class RefundConfirm extends Component {
       <Feedback
         image="refund.jpg"
         text="Refund Order Submitted"
-        primaryButtonText="View on Etherscan"
-        secondaryButtonText="Refund Again">
+        primaryButtonText="Refund Again"
+        goBackLink = "/myaccount">
       </Feedback>
     )
   }

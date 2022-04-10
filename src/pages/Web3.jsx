@@ -18,11 +18,9 @@ class Web3ABI extends React.Component{
 
     //check metamask
     async checkMetamask() {
-        const { ethereum } = window;
-        if (!ethereum) {
+        if (typeof window.ethereum !== 'undefined') {
             alert("Please install Metamask");
         }
-        console.log("metamask ok");
     }
 
     //provider
@@ -32,6 +30,7 @@ class Web3ABI extends React.Component{
 
     //contract
     async Contract() {
+        await this.checkMetamask();
         const Provider = this.Provider();
         const signer = Provider.getSigner();
         const Contract = new ethers.Contract(contractAddress, contractABI, signer);

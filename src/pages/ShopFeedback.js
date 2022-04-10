@@ -7,8 +7,8 @@ function ShopFeedback(props) {
         <Feedback 
           image = "ticket.jpeg" 
           text = "Order Submitted" 
-          primaryButtonText = "View on Etherscan"
-          secondaryButtonText = "Shop Again">
+          primaryButtonText = "Shop Again"
+          goBackLink = "/shop">
         </Feedback>
     );
   }
