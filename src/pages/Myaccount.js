@@ -80,18 +80,33 @@ export default function Myaccount() {
                     <Card border="primary" style={{ width: '60rem' }}>
                         {/* <Card.Header style={{ height: '2rem' }}></Card.Header> */}
                         <Card.Body>
-                            <Card.Title>Account Balance</Card.Title>
+                            <Card.Title>Deploy Information</Card.Title>
+                            <br />
                             <ListGroup>
-                                <ListGroup.Item variant="danger">TotalToken:{balanceInfo[0]}</ListGroup.Item>
-                                <ListGroup.Item variant="success">TokenPrice:{balanceInfo[1]}</ListGroup.Item>
-                                <ListGroup.Item variant="warning">Balance:{balanceInfo[2]}</ListGroup.Item>
-                                <ListGroup.Item variant="info">Contract_ether:{balanceInfo[3]}</ListGroup.Item>
+                                <ListGroup.Item variant="danger">
+                                    <dl class="row">
+                                        <dt class="col-sm-3">TotalToken</dt>
+                                        <dd class="col-sm-9">{balanceInfo[0]}</dd>
+                                    </dl>
+                                </ListGroup.Item>
+                                <ListGroup.Item variant="success">
+                                    <dl class="row">
+                                        <dt class="col-sm-3">TokenPrice (Ether/Token)</dt>
+                                        <dd class="col-sm-9">{balanceInfo[1] / 10 ** 18}</dd>
+                                    </dl>
+                                </ListGroup.Item>
+                                <ListGroup.Item variant="warning">
+                                    <dl class="row">
+                                        <dt class="col-sm-3 text-truncate">TokenBalance</dt>
+                                        <dd class="col-sm-9">{balanceInfo[2]}</dd>
+                                    </dl>
+                                </ListGroup.Item>
                             </ListGroup>
                         </Card.Body>
                     </Card>
                 </div> :
                 <div>
-                    <Card border="primary" style={{ width: '15rem' }}>
+                    <Card border="primary" style={{ width: '30rem' }}>
                         <Card.Header style={{ height: '2rem' }}>Account Balance</Card.Header>
                         <Card.Body>
                             <Card.Title>{balanceInfo[0]} Token</Card.Title>
@@ -130,7 +145,6 @@ export default function Myaccount() {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>FanAddress</th>
                                 <th>TransType</th>
                                 <th>Time</th>
                                 <th>TransAmount</th>
@@ -140,7 +154,6 @@ export default function Myaccount() {
                             {transact.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{item[0]}</td>
                                     <td>{item[1]}</td>
                                     <td>{item[2]}</td>
                                     <td>{item[3].toString()}</td>

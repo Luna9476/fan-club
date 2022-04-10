@@ -54,7 +54,7 @@ export default class Manage extends Component {
     async handleSubmit(event) {
         console.log(this.state)
         event.preventDefault();
-        await w3.PublishStar(this.state.name, this.state.introduction, this.state.avatarURL, this.state.votes)             
+        await w3.PublishStar(this.state.name, this.state.introduction, this.state.avatarURL, this.state.votes)          
     }
 
     handleShow = () => {
@@ -62,6 +62,7 @@ export default class Manage extends Component {
     };
     handleClose = () => {
         this.setState({ show: false });
+        window.location.href = "/manage";
     };
 
 
@@ -70,7 +71,7 @@ export default class Manage extends Component {
         // const { stars } = this.state
         return (
             <Container className='form-border'>
-                <Web3ABI />
+                {/* <Web3ABI /> */}
                 <h3>Idols' Information</h3>
                 <Button variant="primary" onClick={this.handleShow}>
                     Post New Idols
