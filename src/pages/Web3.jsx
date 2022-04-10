@@ -18,7 +18,7 @@ class Web3ABI extends React.Component{
 
     //check metamask
     async checkMetamask() {
-        if (typeof window.ethereum !== 'undefined') {
+        if (typeof window.ethereum == 'undefined') {
             alert("Please install Metamask");
         }
     }
